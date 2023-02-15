@@ -107,6 +107,17 @@ public class PlayerController : MonoBehaviour
         rBody.velocity = new Vector2(axisH, axisV) * speed;
     }
 
+    public void SetAxis(float axisX, float axisY)
+    {
+        axisH = axisX;
+        axisV = axisY;
+
+        if (axisH == 0 && axisV == 0)
+            isMoving = false;
+        else
+            isMoving = true;
+    }
+
     float GetAngle(Vector2 p1, Vector2 p2)
     {
         float angle = angleZ;
