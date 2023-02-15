@@ -751,6 +751,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37c1242e2ffd64e45a30cd52009409ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  life: {fileID: 1649637636}
+  txtArrow: {fileID: 709160}
+  txtKey: {fileID: 15855178}
+  life_0: {fileID: 1245216582, guid: 8688261a1bd3fd54e8227e761fdf2be1, type: 3}
+  life_1: {fileID: 204480163, guid: 8688261a1bd3fd54e8227e761fdf2be1, type: 3}
+  life_2: {fileID: -1495468635, guid: 8688261a1bd3fd54e8227e761fdf2be1, type: 3}
+  life_3: {fileID: 1298983095, guid: 8688261a1bd3fd54e8227e761fdf2be1, type: 3}
 --- !u!4 &744560488
 Transform:
   m_ObjectHideFlags: 0
