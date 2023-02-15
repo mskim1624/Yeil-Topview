@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
-{
-    public static int hp = 3;
+{    
     // 이동 속도
     public float speed = 3.0f;
     // 애니메이션 이름 ( 만든것 )
@@ -25,16 +24,28 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rBody;
     bool isMoving = false;
 
+    // 데미지 처리
+    public static int hp = 3;
+    public static string gameState;
+    public bool inDamage = false;
+
     // Start is called before the first frame update
     void Start()
     {
         rBody = GetComponent<Rigidbody2D>();
         nowAnimation = downAni;
+
+        gameState = "playing";
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (gameState != "playing" || inDamage)
+        {
+            return;
+        }
+
         if (isMoving == false)
         {
             axisH = Input.GetAxisRaw("Horizontal");
@@ -75,6 +86,24 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (gameState != "playing")
+            return;
+
+        if (inDamage)
+        {
+            float val = Mathf.Sin(Time.time * 50);
+            Debug.LogWarning(val);
+            if (val > 0)
+            {
+                gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                
+            }
+            else
+            {
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            }
+            return;
+        }
         rBody.velocity = new Vector2(axisH, axisV) * speed;
     }
 
@@ -92,5 +121,50 @@ public class PlayerController : MonoBehaviour
         }
 
         return angle;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            GetDamage(collision.gameObject);
+        }
+    }
+
+    void GetDamage(GameObject enemy)
+    {
+        if (gameState == "playing")
+        {
+            hp--;
+            if (hp > 0)
+            {
+                rBody.velocity = Vector2.zero;
+                Vector3 toPos = (transform.position - enemy.transform.position).normalized;
+                rBody.AddForce(new Vector2(toPos.x * 4, toPos.y * 4), ForceMode2D.Impulse);
+                inDamage = true;
+                Invoke("DamageEnd", 0.25f);
+            }
+            else
+            {
+                GameOver();
+            }
+        }
+    }
+
+    void DamageEnd()
+    {
+        inDamage = false;
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+    }
+
+    void GameOver()
+    {
+        gameState = "gameover";
+        GetComponent<CircleCollider2D>().enabled = false;
+        rBody.velocity = Vector2.zero;
+        rBody.gravityScale = 2;
+        rBody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse);
+        GetComponent<Animator>().Play(deadAni);
+        Destroy(gameObject, 1.0f);
     }
 }
