@@ -26,26 +26,23 @@ public class UIManager : MonoBehaviour
         txtKey.text = ItemKeeper.hasKeys.ToString();
         txtArrow.text = ItemKeeper.hasArrows.ToString();
 
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
+        if (PlayerController.hp == 1)
         {
-            if (PlayerController.hp == 1)
-            {
-                life.sprite = life_1;
-            }
-            else if (PlayerController.hp == 2)
-            {
-                life.sprite = life_2;
-            }
-            else if (PlayerController.hp == 3)
-            {
-                life.sprite = life_3;
-            }
-            else
-            {
-                life.sprite = life_0;
-            }
-            
+            life.sprite = life_1;
         }
+        else if (PlayerController.hp == 2)
+        {
+            life.sprite = life_2;
+        }
+        else if (PlayerController.hp == 3)
+        {
+            life.sprite = life_3;
+        }
+        else
+        {
+            life.sprite = life_0;
+        }
+            
+        
     }
 }
