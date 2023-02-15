@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static int hp = 3;
     // 이동 속도
     public float speed = 3.0f;
     // 애니메이션 이름 ( 만든것 )
