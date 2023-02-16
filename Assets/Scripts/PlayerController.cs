@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour
         nowAnimation = downAni;
 
         gameState = "playing";
+
+        hp = PlayerPrefs.GetInt("PlayerHP");
     }
 
     // Update is called once per frame
@@ -147,6 +149,7 @@ public class PlayerController : MonoBehaviour
         if (gameState == "playing")
         {
             hp--;
+            PlayerPrefs.SetInt("PlayerHP", hp);
             if (hp > 0)
             {
                 rBody.velocity = Vector2.zero;

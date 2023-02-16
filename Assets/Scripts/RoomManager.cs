@@ -2,9 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class RoomManager : MonoBehaviour
 {
+    [Serializable]
+    public class RoomData
+    {
+        public int RoomID = 0;
+        public string RoomTag = "";
+    }
+
+    public RoomData ValueData;    
+
     public static int doorNumber = 0;
     // Start is called before the first frame update
     void Start()
@@ -41,12 +51,20 @@ public class RoomManager : MonoBehaviour
                 break;
             }
         }
+
+        SoundManager.soundManager.PlayBGM(BGMType.InGame);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    private void OnDestroy()
+    {
+        string json = JsonUtility.ToJson(ValueData);
+        return;
     }
 
     public static void ChangeScene(string sceneName, int doornum)

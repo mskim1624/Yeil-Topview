@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-
+    [HideInInspector]
     public int hp = 1;
     public float speed = 0.5f;
+    [HideInInspector]
     public float reactionDistance = 4.0f;
 
     public string idleAnime = "EnemyIdle";
@@ -19,10 +20,12 @@ public class EnemyController : MonoBehaviour
     string nowAnimation = "";
     string oldAnimation = "";
 
+    [SerializeField]
     float axisH;
     float axisV;
     Rigidbody2D rbody;
 
+    [SerializeField]
     bool isActive = false;
 
 

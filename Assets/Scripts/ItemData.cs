@@ -31,8 +31,11 @@ public class ItemData : MonoBehaviour
                 if ( PlayerController.hp < 3 )
                 {
                     PlayerController.hp++;
+                    PlayerPrefs.SetInt("PlayerHP", PlayerController.hp);
                 }
             }
+
+            ItemKeeper.SaveItem();
 
             gameObject.GetComponent<CircleCollider2D>().enabled = false;
             Rigidbody2D rbody = GetComponent<Rigidbody2D>();
